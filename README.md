@@ -64,7 +64,3 @@ php bin/magento cache:flush
 ## Support
 
 This plugin is provided as-is without any support. Improvements are always welcome.
-
-## License
-
-This project is licensed under the MIT License.
