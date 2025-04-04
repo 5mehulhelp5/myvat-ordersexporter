@@ -1,0 +1,63 @@
+<form id="export_form" class="admin__fieldset" action="<?= $block->getUrl('ordersexporter/export/export') ?>" method="post">
+    <input name="form_key" type="hidden" value="<?= $block->getFormKey() ?>">
+    <fieldset class="fieldset admin__fieldset">
+        <legend><?= __('Export Orders') ?></legend>
+        <div class="field admin__field">
+            <label for="month" class="label admin__field-label"><span><?= __('Month') ?></span></label>
+            <div class="control admin__field-control">
+                <select id="month" name="month" class="select admin__control-select" required>
+                    <?php foreach ($block->getMonths() as $month): ?>
+                        <option value="<?= $month['value'] ?>"><?= $month['label'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <div class="field admin__field">
+            <label for="year" class="label admin__field-label"><span><?= __('Year') ?></span></label>
+            <div class="control admin__field-control">
+                <select id="year" name="year" class="select admin__control-select" required>
+                    <?php foreach ($block->getYears() as $year): ?>
+                        <option value="<?= $year['value'] ?>"><?= $year['label'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <div class="field admin__field">
+            <label for="countries" class="label admin__field-label"><span><?= __('Countries') ?></span></label>
+            <div class="control admin__field-control">
+                <select id="countries" name="countries[]" class="select admin__control-multiselect" multiple="multiple" required>
+                    <?php foreach ($block->getEuropeanCountries() as $country): ?>
+                        <option value="<?= $country['value'] ?>" selected><?= $country['label'] ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <div class="fieldset admin__field">
+            <span class="admin__field-label"><span><?= __('Export Orders') ?></span></span>
+            <div class="admin__field-control">
+                <button id="export_form_submit" title="<?= __('Export Orders') ?>" type="button" class="action-default scalable" backend-button-widget-hook-id="buttonIdExportOrders" data-ui-id="widget-button-1">
+                    <span><?= __('Export Orders') ?></span>
+                </button>
+                <script type="text/javascript">
+                    function eventListenerExportOrders() {
+                        export_form.submit();
+                    }
+                    var listenedElementExportOrdersArray = document.querySelectorAll("*[backend-button-widget-hook-id='buttonIdExportOrders']");
+                    if (listenedElementExportOrdersArray.length !== 'undefined') {
+                        listenedElementExportOrdersArray.forEach(function(element) {
+                            if (element) {
+                                element.onclick = function(event) {
+                                    var targetElement = element;
+                                    if (event && event.target) {
+                                        targetElement = event.target;
+                                    }
+                                    return eventListenerExportOrders.apply(targetElement);
+                                };
+                            }
+                        });
+                    }
+                </script>
+            </div>
+        </div>
+    </fieldset>
+</form>

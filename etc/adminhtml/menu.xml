@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Menu/etc/menu.xsd">
+    <menu>
+        <add id="MyVat_OrdersExporter::main_menu" title="MyVat Orders Exporter" module="MyVat_OrdersExporter" sortOrder="100" parent="Magento_Backend::system_convert" action="ordersexporter/index/index" resource="MyVat_OrdersExporter::main_menu"/>
+    </menu>
+</config>
