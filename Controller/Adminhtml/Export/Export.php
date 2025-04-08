@@ -65,12 +65,14 @@ class Export extends Action
                     $countryCode = $shippingAddress->getCountryId();
                     $countryName = isset($countryNames[$countryCode]) ? $countryNames[$countryCode] : $countryCode;
 
+                    $grossSaleAmount = $order->getGrandTotal() - $order->getShippingAmount();
+
                     $data[] = [
                         'Order Number' => $order->getIncrementId(), // Order number
                         'Country' => $countryName,
                         'Sale Date' => date('d/m/Y', strtotime($order->getCreatedAt())),
                         'Sale Currency' => $order->getOrderCurrencyCode(),
-                        'Gross Sale Amount in Sale Currency' => $order->getGrandTotal(),
+                        'Gross Sale Amount in Sale Currency' => $grossSaleAmount,
                         'VAT RATE (%)' => $taxPercent . '%',
                     ];
                 }
