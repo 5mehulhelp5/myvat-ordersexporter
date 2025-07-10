@@ -1,4 +1,4 @@
-# MyVat Orders Exporter v1.0.1
+# MyVat Orders Exporter v1.0.2
 
 ## Overview
 
