@@ -65,21 +65,25 @@ class Export extends Action
                     $countryCode = $shippingAddress->getCountryId();
                     $countryName = isset($countryNames[$countryCode]) ? $countryNames[$countryCode] : $countryCode;
 
+                    // Calculate gross sale amount (order total minus shipping)
                     $grossSaleAmount = $order->getGrandTotal() - $order->getShippingAmount();
 
-                    $data[] = [
-                        'Order Number' => $order->getIncrementId(), // Order number
-                        'Country' => $countryName,
-                        'Sale Date' => date('d/m/Y', strtotime($order->getCreatedAt())),
-                        'Sale Currency' => $order->getOrderCurrencyCode(),
-                        'Gross Sale Amount in Sale Currency' => $grossSaleAmount,
-                        'VAT RATE (%)' => $taxPercent . '%',
-                    ];
+                    // Only include orders where gross sale amount is below €150
+                    if ($grossSaleAmount < 150) {
+                        $data[] = [
+                            'Order Number' => $order->getIncrementId(),
+                            'Country' => $countryName,
+                            'Sale Date' => date('d/m/Y', strtotime($order->getCreatedAt())),
+                            'Sale Currency' => $order->getOrderCurrencyCode(),
+                            'Gross Sale Amount in Sale Currency' => $grossSaleAmount,
+                            'VAT RATE (%)' => $taxPercent . '%',
+                        ];
+                    }
                 }
             }
 
             if (empty($data)) {
-                throw new LocalizedException(__('No orders found for the specified criteria.'));
+                throw new LocalizedException(__('No orders found below €150 for the specified criteria.'));
             }
 
             $directory = $this->directoryList->getPath(DirectoryList::VAR_DIR) . '/importexport/';
